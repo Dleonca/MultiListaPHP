@@ -1,6 +1,6 @@
 <?php
 include("nodoCategoria.php");
-include("nodoProducto.php"); Preguntar al profesor si es necesario incluir esta clase.
+//include("nodoProducto.php"); Preguntar al profesor si es necesario incluir esta clase.
 
 // Definicion de la clase LISTA SIMPLE
   Class Multilista{
@@ -76,14 +76,14 @@ include("nodoProducto.php"); Preguntar al profesor si es necesario incluir esta 
 //Visualizar Multilista
     function VisualizarMultilista(){
       $P = $this->Inicial;
-      $InfoCategoria = ""; 
+      $InfoCategoria = "";
       $InfoProducto = "";
       if ($P == null) {  
             return "Esta vacia";
       } else {
         while ($P != null) {
           //Se muestra la información de la categoría donde se encuentra el puntero
-          $InfoCategoria = $InfoCategoria.'<br><p class="text-inventory">- '.$P->getIdCategoria()." Categoría: ".$P>getNombreCategoria()."</p>";
+          $InfoCategoria = $InfoCategoria.'<br><p>- '.$P->getIdCategoria()." Categoría: ".$P->getNombreCategoria()."</p>";
           //Guardamos el puntero Abajo en una variable
           $R = $P->getAbajo();
           while ($R != null) {
@@ -99,5 +99,81 @@ include("nodoProducto.php"); Preguntar al profesor si es necesario incluir esta 
       }
       return "$InfoCategoria";
     }
-}
+
+    //Validar que no se repita la categoría
+    function ValidateIdNoRepeatCatg($IdCatg){
+      $P = $this->Inicial;
+      $Cont = 0;
+      while($P != null){
+       if ($P->getIdCategoria() == $IdCatg) {
+          $Cont = $Cont + 1;
+        }
+        $P = $P->getSig();
+      }
+      if ($Cont >= 1) {
+        return False;
+      } else {
+        return True;
+      }
+    }
+
+    //Validar que no se repita el ID del producto
+    //Codigo no terminado
+    /*function ValidateIdNoRepeatIdProducto($ $IdProd){
+      $n = $ne->getAbajo();
+        $cuantos2 = 0;
+        while ($n != null ) {
+           
+            if ($n->getIdLibro() == $id) {
+                $cuantos2 =  $cuantos2 +1;
+            } 
+            
+            $n = $n->getAbajo();
+        }
+
+        if ($cuantos2 >= 1) {
+            $mds = "no valido";
+         } else {
+            $mds = "valido";
+         }
+         
+         return $mds;
+        
+    }*/
+
+// Realiza recorrido a la lista de categorias.
+ /* function RecorrerCategorias(){
+    $P = $this->Inicial;
+    $InfoCategoria = ""; 
+    if ($P == null) { 
+      return "Esta vacia";
+    } else {
+      while ($P != null) {
+        $InfoCategoria = $InfoCategoria."<br>- ".$P->getIdCategoria()."Nombre De La Categoria: ".$P->getNombreCategoria();
+        $P = $P->getSig();
+      }
+      return "$InfoCategoria";
+    }
+  }
+*/
+
+  // Lista De Categorías
+    function ComboCategorias(){
+        $options = ""; 
+        $P = $this->Inicial;
+        while ($P != null) {
+            $options = $options.'<option value="'.$P->getIdCategoria().'">'.$P->getIdNombreCategoria().'</option>';
+            $P = $P->getSig();
+        }
+        return "$options";
+    }
+  }    
+
+//**METODOS PENDIENTES**
+//Metodo actualizar información del producto: Este metodo va a actualizar la información de porcentaje IVA, valor unidad, y el nombre. 
+//Metodo adicionar cantidad: Adicionar la cantidad de un producto, adicionar el stock del producto sin perder el stock anterior.
+//Metodo reducir cantidad: Este metodo buscará un producto, y reducirá su cantidad disponible en el stock.
+//Metodo de ordenamiento: Este se encargará de ordenar la categoría, y los productos dentro de la categoría. Atributo: ID para ambos.
+
+
    ?>
