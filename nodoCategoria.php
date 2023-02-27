@@ -2,10 +2,9 @@
   Class nodoCategoria {
     
   //Atributos
-    
    private $IdCategoria;
    private $NombreCategoria;
-   private $Ant
+   private $Ant;
    private $Sig;
    private $Abajo;
 
@@ -21,45 +20,38 @@
 
   //Gets & Sets
 
-  public function getInfo(){
-    return $this->info;
-  }
-  public function setInfo($info){
-    $this->info = $info; 
-  }
-
   public function getIdCategoria(){
     return $this->IdCategoria;
   }
   public function setIdCategoria($IdCat){
-    $this->info = $IdCategoria; 
+    $this->IdCategoria = $IdCategoria; 
   }
 
   public function getNombreCategoria(){
     return $this->NombreCategoria;
   }
   public function setNombreCategoria($NomCatg){
-    $this->info = $NombreCategoria; 
+    $this->NombreCategoria = $NombreCategoria; 
   }
 
   public function getAnt(){
     return $this->Ant;
   }
-  public function setAnt($setAnt){
-    $this->info = $Ant; 
+  public function setAnt($Ant){
+    $this->Ant = $Ant; 
   }
 
   public function getSig(){
-    return $this->sig;
+    return $this->Sig;
   }
-  public function setSig($sig){
-    $this->sig = $sig;
+  public function setSig($Sig){
+    $this->Sig = $Sig;
   }
   public function getAbajo(){
-    return $this->abajo;
+    return $this->Abajo;
   }
-  public function setAbajo($abajo){
-    $this->abj = $abajo;
+  public function setAbajo($Abajo){
+    $this->Abajo = $Abajo;
   }
 
   }

@@ -1,3 +1,144 @@
-*{
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,700&family=Zeyada&display=swap');
+body{
     box-sizing: border-box;
+    margin : 0;
+}
+/* cabecera*/
+.headerPrincipal{
+  width: 100%;
+  height: 8vh;
+  background-color:  rgb(1, 1, 54);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  box-sizing: border-box;
+}
+.hIzq{
+    width: 40%;
+}
+.hDer{
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+}
+.tituloPagina, .subtitulo {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  text-align: center;
+}
+.tituloPagina {
+    color: #fff;
+    font-size: 1.2em;
+}
+.subtitulo {
+    color:rgb(1, 1, 54);
+    font-size: 1em;
+}
+.labelCRUD{
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    margin: 0 2px;
+    font-size: 1em; 
+}
+.selectCRUD{
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    width: 100px;
+    text-align: center;
+}
+.optstyle{
+    color:rgb(1, 1, 54);
+    height: 30px;
+}
+
+/* cuerpo*/
+.principal{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 5px 0;
+  
+}
+
+.sct-crud, .sct-multilista{
+    width: 100%;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    
+}
+.sct-crud{
+    border-bottom: 1px solid  rgb(1, 1, 54); ;
+}
+.oculto{
+    display: none;
+}
+.agregar-multi, .eliminar-multi, .buscar-multi{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+/* agregar*/
+.addcatg, .addprod{
+    display: flex;
+    flex-direction: column;
+    padding: 0 5px;
+}
+.addcatg{
+    width: 40%;
+}
+.addprod{
+    width: 60%;
+}
+.divrow{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 4px 0;
+}
+.divcolumn{
+    display: flex;
+    flex-direction: column;
+    margin: 0 2px;
+}
+.select-categorias{
+    display: block;
+    height: 24px;
+    border-radius: 0 5px;
+    border: 1px solid  rgb(1, 1, 54);
+}
+.V{
+    width: 5%;
+}
+.X{
+    width: 10%;
+}
+.XX{
+    width: 20%;
+}
+.XXX{
+    width: 30%;
+}
+.XL{
+    width: 40%;
+}
+.L{
+    width: 50%;
+}
+.finput{
+    border-radius: 0 5px;
+    border: 1px solid  rgb(1, 1, 54);
+    height: 20px;
+}
+/* eliminar*/
+
+/* buscar*/
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

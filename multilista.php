@@ -118,44 +118,37 @@ include("nodoCategoria.php");
     }
 
     //Validar que no se repita el ID del producto
-    //Codigo no terminado
-    /*function ValidateIdNoRepeatIdProducto($ $IdProd){
-      $n = $ne->getAbajo();
-        $cuantos2 = 0;
-        while ($n != null ) {
-           
-            if ($n->getIdLibro() == $id) {
-                $cuantos2 =  $cuantos2 +1;
+    function ValidateIdProdNoRepeat($nc, $IdProd){
+      $np = $nc->getAbajo();
+      $contadorid = 0;
+        while ($np != null ) {
+            if ($np->getIdProducto() == $IdProd) {
+              $contadorid =  $contadorid +1;
             } 
-            
-            $n = $n->getAbajo();
+            $np = $np->getAbajo();
         }
-
-        if ($cuantos2 >= 1) {
-            $mds = "no valido";
-         } else {
-            $mds = "valido";
-         }
-         
-         return $mds;
-        
-    }*/
+        if ($contadorid >= 1){
+          return False;
+        } else {
+          return True;
+        }
+    }
 
 // Realiza recorrido a la lista de categorias.
- /* function RecorrerCategorias(){
+ function buscarCategoria($i){
     $P = $this->Inicial;
-    $InfoCategoria = ""; 
-    if ($P == null) { 
-      return "Esta vacia";
-    } else {
-      while ($P != null) {
-        $InfoCategoria = $InfoCategoria."<br>- ".$P->getIdCategoria()."Nombre De La Categoria: ".$P->getNombreCategoria();
-        $P = $P->getSig();
-      }
-      return "$InfoCategoria";
+    $encontrado = false;
+
+    while ($P != null && $encontrado == false) {
+        if ($P->getIdProducto() == $i) {
+            $encontrado = true;
+        } else {
+            $P = $P->getSig();
+        }
     }
+    return $P;
   }
-*/
+
 
   // Lista De Categorías
     function ComboCategorias(){
