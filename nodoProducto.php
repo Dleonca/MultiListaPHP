@@ -71,7 +71,7 @@
 
   //Valor IVA
   public function getValorIVA(){
-    return $this->PorcentajeIVA;
+    return $this->ValorIVA;
   }
   public function setValorIVA($ValorIVA){
     $this->ValorIVA = $ValorIVA; 

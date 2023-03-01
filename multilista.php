@@ -87,7 +87,7 @@ include("nodoCategoria.php");
           //Guardamos el puntero Abajo en una variable
           $R = $P->getAbajo();
           while ($R != null) {
-            $InfoProducto = $InfoProducto."&nbsp;&nbsp;&nbsp;&nbsp;-> Id: ".$R->getIdProducto() . "Marca: ".$R->getMarca()."Nombre: ".$R->getNombreProducto()."Valor Und: ".$R->getValorUnidad()." %IVA: ".$R->getPorcentajeIVA()."Valor IVA: ".$R->getValorIVA()."Total Unidad: ".$R->getTotalUnidad()."Cantidad: ".$R->getCantidad()."<br>";
+            $InfoProducto = $InfoProducto."&nbsp;&nbsp;&nbsp;&nbsp;-> Id: ".$R->getIdProducto()."<br>" . "Marca: ".$R->getMarca()."<br>" ."Nombre: ".$R->getNombreProducto()."<br>" ."Valor Und: ".$R->getValorUnidad()."<br>" ."IVA: ".$R->getPorcentajeIVA()."<br>" ."Valor IVA: ".$R->getValorIVA()."<br>" ."Total Unidad: ".$R->getTotalUnidad()."<br>" ."Cantidad: ".$R->getCantidad()."<br>";
             //Va al siguiente producto
               $R = $R->getAbajo(); 
           }
@@ -140,7 +140,7 @@ include("nodoCategoria.php");
     $encontrado = false;
 
     while ($P != null && $encontrado == false) {
-        if ($P->getIdProducto() == $i) {
+        if ($P->getIdCategoria() == $i) {
             $encontrado = true;
         } else {
             $P = $P->getSig();
@@ -152,13 +152,13 @@ include("nodoCategoria.php");
 
   // Lista De Categorías
     function ComboCategorias(){
-        $options = ""; 
-        $P = $this->Inicial;
-        while ($P != null) {
-            $options = $options.'<option value="'.$P->getIdCategoria().'">'.$P->getIdNombreCategoria().'</option>';
-            $P = $P->getSig();
-        }
-        return "$options";
+      $options = ""; 
+      $P = $this->Inicial;
+      while ($P != null) {
+      $options = $options.'<option value="'.$P->getIdCategoria().'">'.$P->getIdNombreCategoria().'</option>';
+      $P = $P->getSig();
+      }
+      return "$options";
     }
   }    
 
@@ -169,4 +169,4 @@ include("nodoCategoria.php");
 //Metodo de ordenamiento: Este se encargará de ordenar la categoría, y los productos dentro de la categoría. Atributo: ID para ambos.
 
 
-   ?>
+?>
