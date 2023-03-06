@@ -15,6 +15,7 @@ include("nodoCategoria.php");
 // Lista Principal Vacia
     function ListaVaciaCatg(){
       if($this->Inicial == null){
+      //if($P->Inicial == null){
         return true;
       } else {
         return false;
@@ -51,26 +52,17 @@ include("nodoCategoria.php");
         $this->Final = $P;
     }
 
-//Apuntador Abajo En Lista Categoría
-  function ApuntarAbajo($P)
-    {
-        $R = $P->getAbajo(); 
-        while ($R->getAbajo() != null) {
-            $R = $R->getAbajo();
-        }
-        return $R;
-    }
-
 //Adicionar Producto
     function AdicionarProducto($P, $Q){
       if ($this->CategoriaSinProducto($P)){
-            $P->setAbajo($Q);
-        } else {
-            //Se le asigna el puntero de categoría
-            $PunteroAbajo = $this->ApuntarAbajo($P); 
-            //Se le cambia al puntero de Producto
-            $PunteroAbajo->setAbajo($Q);
+        $P->setAbajo($Q);
+      } else {
+        $R = $P->getAbajo(); 
+        while ($R->getAbajo() != null) {
+          $R = $R->getAbajo();
         }
+        $R->setAbajo($Q);
+      }
     }
 
 //Visualizar Multilista
@@ -87,7 +79,7 @@ include("nodoCategoria.php");
           //Guardamos el puntero Abajo en una variable
           $R = $P->getAbajo();
           while ($R != null) {
-            $InfoProducto = $InfoProducto."&nbsp;&nbsp;&nbsp;&nbsp;-> Id: ".$R->getIdProducto()."<br>" . "Marca: ".$R->getMarca()."<br>" ."Nombre: ".$R->getNombreProducto()."<br>" ."Valor Und: ".$R->getValorUnidad()."<br>" ."IVA: ".$R->getPorcentajeIVA()."<br>" ."Valor IVA: ".$R->getValorIVA()."<br>" ."Total Unidad: ".$R->getTotalUnidad()."<br>" ."Cantidad: ".$R->getCantidad()."<br>";
+            $InfoProducto = $InfoProducto."> Id: ".$R->getIdProducto()."<br>" . "Marca: ".$R->getMarca()."<br>" ."Nombre: ".$R->getNombreProducto()."<br>" ."Valor Und: ".$R->getValorUnidad()."<br>" ."IVA: ".$R->getPorcentajeIVA()."%"."<br>" ."Valor IVA: ".$R->getValorIVA()."<br>" ."Total Unidad: ".$R->getTotalUnidad()."<br>" ."Cantidad: ".$R->getCantidad()."<br>";
             //Va al siguiente producto
               $R = $R->getAbajo(); 
           }
@@ -135,10 +127,42 @@ include("nodoCategoria.php");
     }
 
 // Realiza recorrido a la lista de categorias.
+ function buscarInfoProducto($IdProd){
+    $P = $this->Inicial;
+    $encontrado = false;
+    $Producto = null;
+
+    while ($P != null && $encontrado == false) {
+      $R = $P->getAbajo();
+      while ($R != null) {
+        if($R->getIdProducto() == $IdProd){
+          $encontrado = true;
+          $Producto = "Existe el producto: ".$R->getIdProducto()." Marca: ".$R->getMarca()." Nombre: ".$R->getNombreProducto()." Valor Unidad: ".$R->getValorUnidad()." IVA: ".$R->getPorcentajeIVA()."% Valor IVA: ".$R->getValorIVA()." Total Unidad: ".$R->getTotalUnidad()." Cantidad: ".$R->getCantidad()." !";
+        }
+        $R = $R->getAbajo();
+      }
+      $P = $P->getSig();
+    }
+    return $Producto;
+  }
+  function buscarInfoCategoria($i){
+    $P = $this->Inicial;
+    $Q =  $P->getAbajo();
+    $encontrado = false;
+    while ($P != null && $encontrado == false) {
+        if ($P->getIdCategoria() == $i) {
+          $encontrado = true;
+          $Categoria = "Existe la categoria: ".$P->getIdCategoria()."  ".$P->getNombreCategoria()." !!";
+        } else {
+            $P = $P->getSig();
+        }
+    }
+    return $Categoria;
+  }
+// Realiza recorrido a la lista de Productos.
  function buscarCategoria($i){
     $P = $this->Inicial;
     $encontrado = false;
-
     while ($P != null && $encontrado == false) {
         if ($P->getIdCategoria() == $i) {
             $encontrado = true;
@@ -151,16 +175,52 @@ include("nodoCategoria.php");
 
 
   // Lista De Categorías
-    function ComboCategorias(){
+    function crearCombo(){
       $options = ""; 
       $P = $this->Inicial;
       while ($P != null) {
-      $options = $options.'<option value="'.$P->getIdCategoria().'">'.$P->getIdNombreCategoria().'</option>';
+      $options = $options.'<option value="'.$P->getIdCategoria().'">'.$P->getNombreCategoria().'</option>';
       $P = $P->getSig();
       }
       return "$options";
     }
-  }    
+     
+
+//Eliminar Categoria
+    function EliminarCategoria($EC){
+      $P = $this->Inicial;
+      $Ant = $P;
+      $Encontrado = false;
+      $Eliminado = false;
+      while($P != null && !$Encontrado ){
+        if($P->getIdCategoria() == $EC){
+          $Encontrado = true;
+        }else{
+          $Ant = $P;
+          $P = $P->getSig();
+        }
+      }
+      if($P == null){
+        $Eliminado = false;
+      }else{
+        if($P == $this->Inicial){
+          $this->Inicial = $this->Inicial->getSig();
+          if ($P == $this->Final){
+            $this->Final = null;
+          }
+        }else{
+          $Ant->setSig($P->getSig());
+          if ($P == $this->Final){
+            $this->Final = $Ant;
+          }
+        }
+        $P = null;
+        $Eliminado = true;
+      }
+      return $Eliminado;
+    }
+  
+} 
 
 //**METODOS PENDIENTES**
 //Metodo actualizar información del producto: Este metodo va a actualizar la información de porcentaje IVA, valor unidad, y el nombre. 

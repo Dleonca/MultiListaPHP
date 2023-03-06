@@ -90,15 +90,15 @@
     return $this->Cantidad;
   }
   public function setCantidad($CantidadProducto){
-    $this->Cantidad = $CantidadProducto; 
+    $this->CantidadProducto = $CantidadProducto; 
   }
 
   //Puntero Abajo
   public function getAbajo(){
-    return $this->sig;
+    return $this->Abajo;
   }
   public function setAbajo($Abajo){
-    $this->abj = $Abajo;
+    $this->Abajo = $Abajo;
   }
 
   //Actualizar Valores

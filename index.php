@@ -73,7 +73,7 @@
             <h2 class="subtitulo">Añadir Categoria</h2>
             <form  class="formulario" action="index.php" method ="post"> 
               <div class="divrow">
-                <div class="divcolumn XX">
+                <div class="divcolumn XL">
                   <label for="IdCategoria">ID</label>
                   <input type="text" id="IdCategoria" name="IdCategoria" class="finput">
                 </div>
@@ -91,6 +91,9 @@
                 </div>
                 <div class="divcolumn XXX">
                 <input type="submit" value="Agregar Categoria" name="AddCatg"  >
+                </div>
+                <div class="divcolumn XXX">
+                <input type="submit" value="Buscar Categoria" name="SearchCatg"  >
                 </div>
               </div>
             </form>
@@ -117,6 +120,18 @@
                     } 
                   } 
                 }
+              }elseif (isset($_POST["SearchCatg"])) {
+                $IdCat = $_POST["IdCategoria"];
+                if ($IdCat == null ) {
+                  phpAlert("Proporcione la ID de la categoría para buscar si exixte en la lista.");
+                } else{
+                  $catg = $_SESSION["Mlista"]->buscarInfoCategoria($IdCat);
+                  if ($catg == null){
+                    phpAlert("no se encontro esta categoria");
+                  }else{
+                    phpAlert($catg);
+                  }
+                }
               }
             ?>
             <br>
@@ -129,15 +144,15 @@
                 <div class="divcolumn XX">
                   <label>Categoria</label>
                   <select id="categorias" name="select-catg" class="select-categorias ">
-                    <option value="1">Celulares</option>
+                  
                     <?php
-                      /*
+                      
                       $V = $_SESSION["Mlista"]->ListaVaciaCatg();
                       if ($V == True) {
                         echo '<option value="null">null</option>';//no agrega ninguna opcion
                       } else {
                         echo $_SESSION["Mlista"]->crearCombo();
-                      }*/
+                      }
                     ?>
                   </select> 
                 </div>
@@ -163,12 +178,15 @@
                   <label for="PorcentajIVA">% IVA</label>
                   <input type="number" id="PorcentajeIVA" name="PorcentajeIVA" class="finput">
                 </div>
-                <div class="divcolumn XXX">
+                <div class="divcolumn X">
                   <label for="Cantidad">Cantidad</label>
                   <input type="number" id="Cantidad" name="Cantidad" class="finput">   
                 </div>
-                <div class="divcolumn XXX">
+                <div class="divcolumn XX">
                   <input type="submit" value="Agregar Producto" name="AddProd" >
+                </div>
+                <div class="divcolumn XX">
+                  <input type="submit" value="Buscar Producto" name="SearchProd" >
                 </div>
               </div>
             </form>
@@ -186,13 +204,14 @@
                 $option = isset($_POST['select-catg']) ? $_POST['select-catg'] : false;
                 if ($option == true && $option != "null") {
                   if ($idP == "" || $marcaP == "" || $nombreP == "" || $valund == "" || $ptjeIVA == "" || $cant == "" ) {
-                    phpAlert("todos los campos son obligatorio, ninguno puede ser nulo ".$idP);
+                    phpAlert("todos los campos son obligatorio, ninguno puede ser nulo -".$idP);
                   } else {
                     $np = new nodoProducto($idP, $marcaP, $nombreP, $valund, $ptjeIVA, $cant);
                     $nodoCatg = $_SESSION["Mlista"]->buscarCategoria($catgProd);
                     $valida_idProd = $_SESSION["Mlista"]->ValidateIdProdNoRepeat($nodoCatg,$idP);
                     if ($valida_idProd == True) {
                       $_SESSION["Mlista"]->AdicionarProducto($nodoCatg, $np);
+                      phpAlert("Producto Agregado Exitosamente.");
                     } else {
                       phpAlert("ID de PRoducto debe ser unica.");
                     }
@@ -206,6 +225,18 @@
                   $cant = null;
                 } else {
                   phpAlert("Seleccione Categoria para este libro");
+                }
+              }elseif(isset($_POST["SearchProd"])){
+                $idP = $_POST["IdProducto"];
+                if ($idP == null ) {
+                  phpAlert("Proporcione la ID de un producto para buscar si exixte en la lista.");
+                } else{
+                  $Product = $_SESSION["Mlista"]->buscarInfoProducto($idP);
+                  if ($Product == null){
+                    phpAlert("no se encontro este Producto");
+                  }else{
+                    phpAlert($Product);
+                  }
                 }
               }
             ?>
@@ -226,9 +257,9 @@
                   <input type="text" id="IdCategoria" name="IdCategoria" class="finput">
                 </div>
                 <div class="divcolumn XXX">
-                  <select name = "opciones" class="select-categorias">
-                    <option value = "0">Eliminar al inicio</option>
-                    <option value = "1">Eliminar al final</option>
+                  <select name = "OpcionesDelete" class="select-categorias">
+                    <option value = "0">Eliminar Categoria</option>
+                    <option value = "1">Eliminar Categoria Completa</option>
                   </select>
                 </div>
                 <div class="divcolumn XXX">
@@ -236,6 +267,34 @@
                 </div>
               </div>
             </form>
+            <?php
+              // Codigo para eliminar una categoria
+              if (isset($_POST["DelCatg"])) {
+                $OptDelete = $_POST["OpcionesDelete"];
+                //Codigo para eliminar categoría vacía
+                if ($OptDelete == "0"){
+                  
+                  $NodoDelete = null;
+                  $txtIDCatg = $_POST["IdCategoria"];
+                  $NCatg = $_SESSION["Mlista"]->buscarCategoria($txtIDCatg);
+                  if($txtIDCatg!=""){
+                    if ($NCatg == null) {
+                      phpAlert("Esta categoria no existe.");
+                    } else{
+                      if ($_SESSION["Mlista"]->CategoriaSinProducto($NCatg) == false){
+                        phpAlert("Esta categoria contiene productos. Si desea eliminarla, favor utilizar la opción Eliminar categoría completa");
+                      }else {
+                        $NodoDelete = $_SESSION["Mlista"]->EliminarCategoria($txtIDCatg); 
+                        phpAlert("La categoria : ".$txtIDCatg." ha sido eliminado correctamente.");
+                      }
+                    }
+                    
+                  }
+                }
+                //Codigo para eliminar categoría completa
+                //if ($OptDelete = "1"){null}
+              }
+            ?>
           </div>
           <div class="addprod" id="delprod">
             <!-- Agregar formulario para Productos -->
@@ -248,13 +307,12 @@
                  <div class="divcolumn XX">
                   <select id="categorias" name="select-catg" class="select-categorias ">
                     <?php
-                      /*
                       $V = $_SESSION["Mlista"]->ListaVaciaCatg();
                       if ($V == True) {
                         echo '<option value="null">null</option>';//no agrega ninguna opcion
                       } else {
                         echo $_SESSION["Mlista"]->crearCombo();
-                      }*/
+                      }
                     ?>
                   </select> 
                 </div>
