@@ -330,8 +330,6 @@
             <!-- codigo PHP para agregar productos-->
           </div>
         </div>
-        <!-- Contenedor de opciones buscar-->
-        <div  class="oculto" id="searchMulti"></div>
      </section>
      <!--En este section solo se visualizara la multilista -->
      <section class="sct-multilista" id="crudRead">

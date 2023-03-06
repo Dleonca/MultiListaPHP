@@ -75,7 +75,7 @@ include("nodoCategoria.php");
       } else {
         while ($P != null) {
           //Se muestra la información de la categoría donde se encuentra el puntero
-          $InfoCategoria = $InfoCategoria.'<br><p>- '.$P->getIdCategoria()." Categoría: ".$P->getNombreCategoria()."</p>";
+          $InfoCategoria = $InfoCategoria.'<div class="MulticatProd".<br><p class="pcat"> '.$P->getIdCategoria()."  ".$P->getNombreCategoria()."</p>";
           //Guardamos el puntero Abajo en una variable
           $R = $P->getAbajo();
           while ($R != null) {
@@ -83,13 +83,13 @@ include("nodoCategoria.php");
             //Va al siguiente producto
               $R = $R->getAbajo(); 
           }
-          $InfoCategoria = $InfoCategoria.$InfoProducto;
+          $InfoCategoria = $InfoCategoria.$InfoProducto.'</div>';
           // Va a la siguiente categoria
           $P = $P->getSig();
           $InfoProducto = null;
         }
       }
-      return "$InfoCategoria";
+      return $InfoCategoria;
     }
 
     //Validar que no se repita la categoría

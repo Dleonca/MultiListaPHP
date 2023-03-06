@@ -70,8 +70,27 @@ body{
     box-sizing: border-box;
     
 }
+.sct-multilista{
+    display: flex;
+    flex-direction: row;
+}
+.MulticatProd{
+    display: flex;
+    flex-direction: column;
+}
+.pcat{
+    width: 200px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(1, 1, 54); ;
+    border-radius: 13px;
+    color: white;
+    margin: 3px;
+}
 .sct-crud{
-    border-bottom: 1px solid  rgb(1, 1, 54); ;
+    border-bottom: 1px solid  rgb(1, 1, 54); 
 }
 .oculto{
     display: none;
