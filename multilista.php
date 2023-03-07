@@ -79,7 +79,7 @@ include("nodoCategoria.php");
           //Guardamos el puntero Abajo en una variable
           $R = $P->getAbajo();
           while ($R != null) {
-            $InfoProducto = $InfoProducto.'<p class="pprod" Id: '.$R->getIdProducto()."<br>". "Marca: ".$R->getMarca()."<br>" ."Nombre: ".$R->getNombreProducto()."<br>" ."Valor Und: ".$R->getValorUnidad()."<br>" ."IVA: ".$R->getPorcentajeIVA()."%"."<br>" ."Valor IVA: ".$R->getValorIVA()."<br>" ."Total Unidad: ".$R->getTotalUnidad()."<br>" ."Cantidad: ".$R->getCantidad()."<br>";
+            $InfoProducto = $InfoProducto.'<p class="pprod">'.' Id: '.$R->getIdProducto().'<br>'. "Marca: ".$R->getMarca()."<br>" ."Nombre: ".$R->getNombreProducto()."<br>" ."Valor Und: ".$R->getValorUnidad()."<br>" ."IVA: ".$R->getPorcentajeIVA()."%"."<br>" ."Valor IVA: ".$R->getValorIVA()."<br>" ."Total Unidad: ".$R->getTotalUnidad()."<br>" ."Cantidad: ".$R->getCantidad()."<br>";
             //Va al siguiente producto
               $R = $R->getAbajo(); 
           }
@@ -219,7 +219,36 @@ include("nodoCategoria.php");
       }
       return $Eliminado;
     }
-  
+  //eliminar producto
+  function eliminarProducto($ic, $ip){
+    $P = $this->buscarCategoria($ic);
+    if ($P == null) {
+      return false;
+    } else {
+      $Q = $P->getAbajo();
+      $ant = $Q;
+      $encontrado = false;
+      while ($Q != null && $encontrado == false) {
+        if ($Q->getIdProducto() == $ip) {
+          $encontrado = true;
+        } else {
+          $ant = $Q;
+          $Q = $Q->getAbajo();
+        }
+      }
+      if ($Q == null) {
+        return false;
+      } else {
+        if ($Q === $P->getAbajo()) {
+          $P->setAbajo($Q->getAbajo());
+        } else {
+          $ant->setAbajo($Q->getAbajo());
+        }
+        $Q = null;
+        return true;
+      }
+    }
+  }
 } 
 
 //**METODOS PENDIENTES**

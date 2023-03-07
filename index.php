@@ -328,6 +328,22 @@
               </div>
             </form>
             <!-- codigo PHP para agregar productos-->
+            <?php 
+              if (isset($_POST["delProd"])) {
+                $prodid = $_POST["IdProducto"];
+                $catID = $_POST["select-catg"];
+                if ($prodid != null && $catID != null) {
+                  $res = $_SESSION["Mlista"]->eliminarProducto($catID, $prodid);
+                  if ($res == true) {
+                    phpAlert( "Libro eliminado correctamente!");
+                  }else{
+                    phpAlert( "Libro no encontrado");
+                  } 
+                } else {
+                  phpAlert("PAra eliminar un producto proporcione la ID del producto y la categoria a la que pertenece!");
+                } 
+              }
+            ?>
           </div>
         </div>
      </section>
