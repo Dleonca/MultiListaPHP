@@ -79,7 +79,7 @@ include("nodoCategoria.php");
           //Guardamos el puntero Abajo en una variable
           $R = $P->getAbajo();
           while ($R != null) {
-            $InfoProducto = $InfoProducto."> Id: ".$R->getIdProducto()."<br>" . "Marca: ".$R->getMarca()."<br>" ."Nombre: ".$R->getNombreProducto()."<br>" ."Valor Und: ".$R->getValorUnidad()."<br>" ."IVA: ".$R->getPorcentajeIVA()."%"."<br>" ."Valor IVA: ".$R->getValorIVA()."<br>" ."Total Unidad: ".$R->getTotalUnidad()."<br>" ."Cantidad: ".$R->getCantidad()."<br>";
+            $InfoProducto = $InfoProducto.'<p class="pprod" Id: '.$R->getIdProducto()."<br>". "Marca: ".$R->getMarca()."<br>" ."Nombre: ".$R->getNombreProducto()."<br>" ."Valor Und: ".$R->getValorUnidad()."<br>" ."IVA: ".$R->getPorcentajeIVA()."%"."<br>" ."Valor IVA: ".$R->getValorIVA()."<br>" ."Total Unidad: ".$R->getTotalUnidad()."<br>" ."Cantidad: ".$R->getCantidad()."<br>";
             //Va al siguiente producto
               $R = $R->getAbajo(); 
           }
