@@ -39,8 +39,8 @@
   public function getMarca(){
     return $this->Marca;
   }
-  public function setMarca($MarcaProd){
-    $this->Marca = $MarcaProd; 
+  public function setMarca($Marca){
+    $this->Marca = $Marca; 
   }
 
   //Nombre del producto
@@ -48,15 +48,15 @@
     return $this->NombreProducto;
   }
   public function setNombreProducto($NombreProd){
-    $this->NombreProducto = $NombreProd; 
+    $this->NombreProd = $NombreProd; 
   }
 
   //Valor Unidad
   public function getValorUnidad(){
     return $this->ValorUnidad;
   }
-  public function setValorUnidad($ValorUnd){
-    $this->ValorUnidad = $ValorUnd; 
+  public function setValorUnidad($ValorUnidad){
+    $this->ValorUnidad = $ValorUnidad; 
     $this->ActualizarValores();
   }
 
@@ -64,8 +64,8 @@
   public function getPorcentajeIVA(){
     return $this->PorcentajeIVA;
   }
-  public function setPorcentajeIVA($PtjeIVA){
-    $this->PorcentajeIVA = $PtjeIVA; 
+  public function setPorcentajeIVA($PorcentajeIVA){ 
+    $this->PorcentajeIVA = $PorcentajeIVA; 
     $this->ActualizarValores();
   }
 
@@ -81,7 +81,7 @@
   public function getTotalUnidad(){
     return $this->TotalUnidad;
   }
-  public function setTotalUnidad($TotalUnd){
+  public function setTotalUnidad($TotalUnidad){
     $this->TotalUnidad = $TotalUnidad; 
   }
 
@@ -89,8 +89,8 @@
   public function getCantidad(){
     return $this->Cantidad;
   }
-  public function setCantidad($CantidadProducto){
-    $this->CantidadProducto = $CantidadProducto; 
+  public function setCantidad($Cantidad){
+    $this->Cantidad = $Cantidad; 
   }
 
   //Puntero Abajo

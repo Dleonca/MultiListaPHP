@@ -83,17 +83,22 @@
                 </div>
               </div>
               <div class="divrow">
-                <div class="divcolumn XXX">
+                <div class="divcolumn XL">
                   <select name = "opciones" class="select-categorias">
                     <option value = "0">Agregar al inicio</option>
                     <option value = "1">Agregar al final</option>
                   </select>
                 </div>
-                <div class="divcolumn XXX">
+                <div class="divcolumn XL">
                 <input type="submit" value="Agregar Categoria" name="AddCatg"  >
                 </div>
-                <div class="divcolumn XXX">
+              </div>
+              <div class="divrow">
+                <div class="divcolumn XL">
                 <input type="submit" value="Buscar Categoria" name="SearchCatg"  >
+                </div>
+                <div class="divcolumn XL">
+                <input type="submit" value="Ordenar Categorias" name="OrdCatg"  >
                 </div>
               </div>
             </form>
@@ -123,7 +128,7 @@
               }elseif (isset($_POST["SearchCatg"])) {
                 $IdCat = $_POST["IdCategoria"];
                 if ($IdCat == null ) {
-                  phpAlert("Proporcione la ID de la categoría para buscar si exixte en la lista.");
+                  phpAlert("Proporcione la ID de la categoría para buscar si existe en la lista.");
                 } else{
                   $catg = $_SESSION["Mlista"]->buscarInfoCategoria($IdCat);
                   if ($catg == null){
@@ -132,6 +137,8 @@
                     phpAlert($catg);
                   }
                 }
+              }elseif (isset($_POST["OrdCatg"])) {
+                $_SESSION["Mlista"]->OrdenarCategoriaBubbleSort();
               }
             ?>
             <br>
@@ -185,8 +192,19 @@
                 <div class="divcolumn XX">
                   <input type="submit" value="Agregar Producto" name="AddProd" >
                 </div>
+              </div>
+              <div class="divrow">
                 <div class="divcolumn XX">
                   <input type="submit" value="Buscar Producto" name="SearchProd" >
+                </div>
+                <div class="divcolumn XX">
+                  <input type="submit" value="Disminuir Cantidad" name="Disminuir" >
+                </div>
+                <div class="divcolumn XX">
+                  <input type="submit" value="Aumentar Cantidad" name="Aumentar" >
+                </div>
+                <div class="divcolumn XX">
+                  <input type="submit" value="Actualizar Poducto" name="Actualizar" >
                 </div>
               </div>
             </form>
@@ -238,7 +256,30 @@
                     phpAlert($Product);
                   }
                 }
+              }elseif(isset($_POST["Disminuir"])){
+                $catgProd = $_POST["select-catg"];
+                $idP = $_POST["IdProducto"];
+                $cant = $_POST["Cantidad"];
+                $res = $_SESSION["Mlista"]->disminuirCantProd($catgProd, $idP, $cant);
+                phpAlert($res);
+              }elseif(isset($_POST["Aumentar"])){
+                $catgProd = $_POST["select-catg"];
+                $idP = $_POST["IdProducto"];
+                $cant = $_POST["Cantidad"];
+                $res = $_SESSION["Mlista"]->aumentarCantProd($catgProd, $idP, $cant);
+                phpAlert($res);
+              }elseif(isset($_POST["Actualizar"])){
+                $catgProd = $_POST["select-catg"];
+                $idP = $_POST["IdProducto"];
+                $marcaP = $_POST["Marca"];
+                $nombreP = $_POST["NombreProducto"];
+                $valund = $_POST["ValorUnidad"];
+                $ptjeIVA = $_POST["PorcentajeIVA"];
+                $cant = $_POST["Cantidad"];
+                $res = $_SESSION["Mlista"]->ActualizarProd($catgProd, $idP, $marcaP,$nombreP,$valund, $ptjeIVA, $cant);
+                phpAlert($res);
               }
+                
             ?>
             <br>
           </div>

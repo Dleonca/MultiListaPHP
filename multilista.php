@@ -1,3 +1,5 @@
+
+
 <?php
 include("nodoCategoria.php");
 //include("nodoProducto.php"); Preguntar al profesor si es necesario incluir esta clase.
@@ -7,7 +9,7 @@ include("nodoCategoria.php");
     private $Inicial;
     private $Final;
 
-// Constructor
+    // Constructor
     function __construct(){
       $this->Inicial = NULL;
       $this->Final = NULL;
@@ -21,7 +23,16 @@ include("nodoCategoria.php");
         return false;
       }
     }
-
+// longitud de lista categorias
+    function longitud(){
+        $P = $this->NodoInicial;
+        $contador = 0;
+        while ($P != null){
+          $contador = $contador + 1 ;
+          $P = $P->getSig();
+        }
+        return $contador ;
+    }
 // Lista Categoria Vacia
     function CategoriaSinProducto($P){
       if ($P->getAbajo() == null) {
@@ -249,6 +260,120 @@ include("nodoCategoria.php");
       }
     }
   }
+   //disminuir cantidad de un producto
+    function disminuirCantProd($ic, $ip, $cant){
+      $P = $this->buscarCategoria($ic);
+      $R = $P->getAbajo();
+      $encontrado = false;
+      $msg = "";
+      while ($R != null && $encontrado == false) {
+        if($R->getIdProducto() == $ip){
+          $encontrado = true;
+          if ($cant>$R->getCantidad()){
+            $msg = " no es valida la disminucion";
+          }else{
+            $cantActual = $R->getCantidad() ;
+            $R->setCantidad($cantActual-$cant);
+            $msg = "Disminución exitosa!!";
+          }
+        }
+        $R = $R->getAbajo();
+      }
+      if ($encontrado == false){
+        $msg = " no se encontro producto";
+      }
+      return $msg ;
+    }
+    //aumentar cantidad de un producto
+    function aumentarCantProd($ic, $ip, $cant){
+      $P = $this->buscarCategoria($ic);
+      $R = $P->getAbajo();
+      $encontrado = false;
+      $msg = "";
+      while ($R != null && $encontrado == false) {
+        if($R->getIdProducto() == $ip){
+          $encontrado = true;
+          $R->setCantidad($R->getCantidad()+$cant);
+          $msg = "Aumento exitoso!!";
+        }
+        $R = $R->getAbajo();
+      }
+      if ($encontrado == false){
+        $msg = " no se encontro producto";
+      }
+      return $msg ;
+    }
+    function ActualizarProd($catgProd, $idP, $marcaP,$nombreP,$valund, $ptjeIVA, $cant){
+      $P = $this->buscarCategoria($catgProd);
+      $R = $P->getAbajo();
+      $encontrado = false;
+      $msg = "";
+      while ($R != null && $encontrado == false) {
+        if($R->getIdProducto() == $idP){
+          $encontrado = true;
+          if ($marcaP != null){
+            $R->setMarca($marcaP);
+             $msg = $msg."Marca Actualizada"."<br>";
+          }
+          if ($nombreP != null){
+            $R->setNombreProducto($nombreP);
+            $msg = $msg."Nombre Actualizado"."<br>";
+          }
+          if ($valund != null){
+            $R->setValorUnidad($valund);
+            $msg = $msg."Valor Actualizado"."<br>";
+          }
+          if ($ptjeIVA != null){
+            $R->setPorcentajeIVA($ptjeIVA);
+            $msg = $msg."Porcentaje Actualizado"."<br>";
+          }
+           if ($cant != null){
+            $R->setCantidad($cant);
+            $msg = $msg."Cantidad Actualizada"."<br>";
+          }
+        }
+        $R = $R->getAbajo();
+      }
+      if ($encontrado == false){
+        $msg = " no se encontro producto";
+      }
+      return $msg ;
+    }
+/*
+  function OrdenarCategoriaBubbleSort() {
+    if ($this->longitud() > 1) {
+      $cambio = True;
+        do {
+            $actual = $this->Inicial;
+            $anterior = null;
+            $siguiente = $actual->getSig();
+            $cambio = false;
+            while ( $siguiente != null ) {
+                if ($actual->getIdCategoria() > $siguiente->getIdCategoria()) {
+                    $cambio = true;
+                    if ( $anterior != null ) {
+                        $sig = $siguiente->getSig();
+                        $anterior->getSig() = $siguiente;
+                        $siguiente->getSig() = $actual;
+                        $actual->getSig() = $sig;
+                    } else {
+                        $sig = $siguiente->getSig();
+                        $this->Inicial = $siguiente;
+                        $siguiente->getSig() = $actual;
+                        $actual->getSig() = $sig;
+                    }
+                    $anterior = $siguiente;
+                    $siguiente = $actual->getSig();
+                } else { 
+                    $anterior = $actual;
+                    $actual = $siguiente;
+                    $siguiente = $siguiente->getSig();
+                }
+            } 
+        } while( $cambio );
+    }
+}
+  */
 } 
 
 //**METODOS PENDIENTES**
